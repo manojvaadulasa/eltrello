@@ -4,7 +4,7 @@ import { SocketService } from 'src/app/shared/services/socket.service';
 import { BoardInterface } from 'src/app/shared/types/board.interface';
 import { ColumnInterface } from 'src/app/shared/types/column.interface';
 import { SocketEventsEnum } from 'src/app/shared/types/socketEvents.enum';
-import { TaskInterface } from '../shared/types/task.interface';
+import { TaskInterface } from 'src/app/shared/types/task.interface';
 
 @Injectable()
 export class BoardService {
@@ -49,22 +49,42 @@ export class BoardService {
     this.board$.next({ ...board, title: updatedBoard.title });
   }
 
-  updateColumn(updatedColumn:ColumnInterface):void{
-    const updateColumn = this.columns$.getValue().map((column)=>{
-      if(column.id === updatedColumn.id){
-        return { ...column,title:updatedColumn.title };
+  updateColumn(updatedColumn: ColumnInterface): void {
+    const updatedColumns = this.columns$.getValue().map((column) => {
+      if (column.id === updatedColumn.id) {
+        return { ...column, title: updatedColumn.title };
       }
       return column;
     });
-    this.columns$.next(updateColumn);
+    this.columns$.next(updatedColumns);
   }
 
-  deleteColumn(columnId:string):void{
-    const updatedColumn = this.columns$.getValue().filter(
-      (column)=>{
-        column.id !== columnId
+  updateTask(updatedTask: TaskInterface): void {
+    const updatedTasks = this.tasks$.getValue().map((task) => {
+      if (task.id === updatedTask.id) {
+        return {
+          ...task,
+          title: updatedTask.title,
+          description: updatedTask.description,
+          columnId: updatedTask.columnId,
+        };
       }
-    );
-    this.columns$.next(updatedColumn);
+      return task;
+    });
+    this.tasks$.next(updatedTasks);
+  }
+
+  deleteColumn(columnId: string): void {
+    const updatedColumns = this.columns$
+      .getValue()
+      .filter((column) => column.id !== columnId);
+    this.columns$.next(updatedColumns);
+  }
+
+  deleteTask(taskId: string): void {
+    const updatedTasks = this.tasks$
+      .getValue()
+      .filter((task) => task.id !== taskId);
+    this.tasks$.next(updatedTasks);
   }
 }

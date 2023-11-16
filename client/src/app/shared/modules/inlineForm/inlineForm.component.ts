@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 
 @Component({
-  selector:'app-inline-form',
+  selector:'inline-form',
   templateUrl:'./inlineForm.component.html'
 })
 export class InlineFormComponent {

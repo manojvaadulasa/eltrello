@@ -1,25 +1,39 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
-import { BoardComponent } from "./board.component";
-import { RouterModule, Routes } from "@angular/router";
-import { AuthGuardService } from "../auth/services/authGuard.service";
-import { BoardService } from "./board.service";
-import { ColumnsService } from "../shared/services/columns.service";
-import { TopBarModule } from "../shared/modules/topBar/topBar.module";
-import { InlineFormModule } from "../shared/modules/inlineForm/inlineForm.module";
-import { TasksService } from "../shared/services/tasks.service";
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthGuardService } from '../auth/services/authGuard.service';
+import { InlineFormModule } from '../shared/modules/inlineForm/inlineForm.module';
+import { ColumnsService } from '../shared/services/columns.service';
+import { TasksService } from '../shared/services/tasks.service';
+import { BoardComponent } from './components/board/board.component';
+import { TaskModalComponent } from './components/taskModal/taskModal.component';
+import { BoardService } from './services/board.service';
+import { TopBarModule } from '../shared/modules/topBar/topBar.module';
 
-const routes : Routes = [
+const routes: Routes = [
   {
     path: 'boards/:boardId',
-    component:BoardComponent,
-    canActivate: [AuthGuardService]
-  }
-]
+    component: BoardComponent,
+    canActivate: [AuthGuardService],
+    children: [
+      {
+        path: 'tasks/:taskId',
+        component: TaskModalComponent,
+      },
+    ],
+  },
+];
 
 @NgModule({
-  imports:[CommonModule,RouterModule.forChild(routes),TopBarModule,InlineFormModule],
-  declarations:[BoardComponent],
-  providers: [BoardService, ColumnsService, TasksService]
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    InlineFormModule,
+    ReactiveFormsModule,
+    TopBarModule
+  ],
+  declarations: [BoardComponent, TaskModalComponent],
+  providers: [BoardService, ColumnsService, TasksService],
 })
-export class BoardModule{}
+export class BoardModule {}

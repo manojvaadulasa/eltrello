@@ -88,6 +88,12 @@ io.use(async (socket : SocketInterface,next)=>{
     socket.on(SocketEventsEnum.columnsUpdate, (data)=>{
         columnsControllers.updateColumn(io,socket,data) 
     });
+    socket.on(SocketEventsEnum.tasksUpdate, (data)=>{
+        tasksControllers.updateTasks(io,socket,data) 
+    });
+    socket.on(SocketEventsEnum.tasksDelete, (data) => {
+        tasksControllers.deleteTask(io, socket, data);
+    }); 
 });
 
 mongoose.connect("mongodb://localhost:27017/eltrello").then(()=>{
