@@ -4,6 +4,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { BoardsComponent } from "./boards.component";
 import { AuthGuardService } from "../auth/services/authGuard.service";
 import { BoardsService } from "../shared/services/boards.service";
+import { InlineFormModule } from "../shared/modules/inlineForm/inlineForm.module";
+import { TopBarModule } from "../shared/modules/topBar/topBar.module";
 
 const routes : Routes = [
   {
@@ -14,7 +16,7 @@ const routes : Routes = [
 ]
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, RouterModule.forChild(routes),InlineFormModule,TopBarModule],
   declarations:[BoardsComponent],
   providers:[BoardsService]
 })

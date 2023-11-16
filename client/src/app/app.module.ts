@@ -8,6 +8,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HomeModule } from './home/home.module';
 import { AuthInterceptorService } from './auth/services/authInterceptor.service';
 import { BoardsModule } from './boards/boards.module';
+import { BoardModule } from './board/board.module';
+import { SocketService } from './shared/services/socket.service';
 
 @NgModule({
   declarations: [
@@ -19,14 +21,16 @@ import { BoardsModule } from './boards/boards.module';
     AuthModule,
     HttpClientModule,
     HomeModule,
-    BoardsModule
+    BoardsModule,
+    BoardModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi:true
-    }
+    },
+    SocketService
   ],
   bootstrap: [AppComponent]
 })

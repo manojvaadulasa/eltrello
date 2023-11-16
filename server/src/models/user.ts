@@ -20,7 +20,8 @@ const userSchema = new Schema<UserDocument>({
         select:false // This ensures that whenever we retreive from the DB, this feild is never retreived. 
     }, // This will store the password as a plain string. We must not do that and we must hide the actual password. To do that, we must hash it.
 },{
-    timestamps : true   
+    timestamps : true,
+    collection: "users",   
 });
 
 userSchema.pre("save",async function (next) {
@@ -40,4 +41,4 @@ userSchema.methods.validatePassword = function (password:string) {
     return bcryptjs.compare(password, this.password);
 }
 
-export default model<UserDocument>("UserModel",userSchema);
+export default model<UserDocument>("users",userSchema);
